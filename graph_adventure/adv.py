@@ -2,6 +2,7 @@ from room import Room
 from player import Player
 from world import World
 from roomGraphData import roomGraph
+from util import Queue
 
 import random
 
@@ -16,6 +17,27 @@ player = Player("Name", world.startingRoom)
 # FILL THIS IN
 traversalPath = ['n', 's']
 
+print(f"---{'n' in roomGraph[0][1].keys()}")
+
+qq = Queue()
+qq.enqueue(0)
+
+while qq:
+    vertex = qq.dequeue()
+    if vertex in traversalPath:
+        continue
+    traversalPath.append(vertex)
+    print(vertex)
+    if vertex is not None:
+        for adj_vertex in roomGraph[vertex][1].keys():
+            # print(roomGraph[vertex][1][adj_vertex])
+            qq.enqueue(roomGraph[vertex][1][adj_vertex])
+    else:
+        break
+
+print('---------------------------------|||||||\n\n')
+print(f'{traversalPath}')
+print('\n\n')
 
 # TRAVERSAL TEST
 visited_rooms = set()
