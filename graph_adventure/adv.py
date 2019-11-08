@@ -26,44 +26,52 @@ print(traversalGraph)
 # print(f"---{'n' in roomGraph[0][1].keys()}")
 
 # qq = Queue()
-# qq.enqueue(0)
+# qq.enqueue(player.currentRoom.id)
 
 # while qq:
-#     vertex = qq.dequeue()
-#     if vertex in traversalPath:
+#     room = qq.dequeue()
+#     if room in traversalPath:
 #         continue
-#     traversalPath.append(vertex)
-#     print(vertex)
-#     if vertex is not None:
-#         for adj_vertex in roomGraph[vertex][1].keys():
-#             # print(roomGraph[vertex][1][adj_vertex])
-#             qq.enqueue(roomGraph[vertex][1][adj_vertex])
+#     traversalPath.append(room)
+#     print(room)
+#     if room is not None:
+#         for adj_room in roomGraph[room][1].keys():
+#             # print(roomGraph[room][1][adj_room])
+#             qq.enqueue(roomGraph[room][1][adj_room])
 #     else:
 #         break
 
-# stack = []
-# stack.append(3)
+stack = []
+stack.append(player.currentRoom.id)
 
-# while stack:
-#     vertex = stack.pop()
-#     if vertex in traversalPath:
-#         continue
+while stack:
+    room = stack.pop()
+    if room in traversalPath:
+        continue
 
-#     print(vertex)
-#     if vertex is not None and vertex in roomGraph:
-#         traversalPath.append(vertex)
-#         print(vertex)
-#         for adj_vertex in roomGraph[vertex][1].keys():
-#             stack.append(roomGraph[vertex][1][adj_vertex])
-#     else:
-#         break
+    print(room)
+    if room is not None and room in traversalGraph.keys():
+        # exits = player.currentRoom.getExits()
 
-# print('---------------------------------|||||||\n\n')
-# print(f'{traversalPath}')
-# print('\n\n')
+        for side in player.currentRoom.getExits():
+            path = (player.currentRoom.id, side)
+            if path not in traversalPath:
+                player.travel(side)
+                traversalPath.append(path)
+                stack.append(player.currentRoom.id)
+    else:
+        break
 
-traversalPath = ['e', 'e', 'w', 'w', 'w', 'w',
-                 'e', 'e', 's', 's', 'n', 'n', 'n', 'n']
+print('---------------------------------|||||||\n\n')
+print(f'{traversalPath}')
+print('\n\n')
+
+
+
+# traversalPath = ['e', 'e', 'w', 'w', 'w', 'w',
+#                  'e', 'e', 's', 's', 'n', 'n', 'n', 'n']
+
+traversalPath = [i[1] for i in traversalPath]
 
 # TRAVERSAL TEST
 visited_rooms = set()
