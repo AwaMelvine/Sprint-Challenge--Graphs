@@ -3,6 +3,7 @@ from player import Player
 from world import World
 from roomGraphData import roomGraph
 from util import Queue
+import random
 
 import random
 
@@ -23,29 +24,13 @@ for i in roomGraph:
     traversalGraph[i] = roomGraph[i][1]
 print(traversalGraph)
 
-# print(f"---{'n' in roomGraph[0][1].keys()}")
 
-# qq = Queue()
-# qq.enqueue(player.currentRoom.id)
-
-# while qq:
-#     room = qq.dequeue()
-#     if room in traversalPath:
-#         continue
-#     traversalPath.append(room)
-#     print(room)
-#     if room is not None:
-#         for adj_room in roomGraph[room][1].keys():
-#             # print(roomGraph[room][1][adj_room])
-#             qq.enqueue(roomGraph[room][1][adj_room])
-#     else:
-#         break
-
-stack = []
-stack.append(player.currentRoom.id)
+# DFS PATH
+stack = Queue()
+stack.enqueue(player.currentRoom.id)
 
 while stack:
-    room = stack.pop()
+    room = stack.dequeue()
     if room in traversalPath:
         continue
 
@@ -58,20 +43,19 @@ while stack:
             if path not in traversalPath:
                 player.travel(side)
                 traversalPath.append(path)
-                stack.append(player.currentRoom.id)
+                stack.enqueue(player.currentRoom.id)
     else:
         break
 
-print('---------------------------------|||||||\n\n')
 print(f'{traversalPath}')
 print('\n\n')
-
 
 
 # traversalPath = ['e', 'e', 'w', 'w', 'w', 'w',
 #                  'e', 'e', 's', 's', 'n', 'n', 'n', 'n']
 
 traversalPath = [i[1] for i in traversalPath]
+print(f"Length: {len(traversalPath)}")
 
 # TRAVERSAL TEST
 visited_rooms = set()
